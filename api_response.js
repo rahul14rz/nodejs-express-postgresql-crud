@@ -1,12 +1,12 @@
-function createApiResponse({ success, status, message, data = null }) {
+function createApiResponse({ success, status, message, ...keyValuePairs }) {
   const response = {
     success,
     status,
     message,
   };
 
-  if (data !== null) {
-    response.data = data;
+  for (const key in keyValuePairs) {
+    response[key] = keyValuePairs[key];
   }
 
   return response;
