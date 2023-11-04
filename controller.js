@@ -26,6 +26,7 @@ class Controller {
         "INSERT INTO posts (title,content,author) VALUES ($1,$2,$3) RETURNING *",
         [title, content, author]
       );
+
       var postId = data.rows[0].id;
       var successResponse = createApiResponse({
         success: true,
@@ -105,9 +106,10 @@ class Controller {
 
   static deletePost = async (req, res, next) => {
     try {
-      const data = await pool.query("DELETE FROM posts WHERE id=$1 RETURNING *", [
-        req.body.post_id,
-      ]);
+      const data = await pool.query(
+        "DELETE FROM posts WHERE id=$1 RETURNING *",
+        [req.body.post_id]
+      );
       if (data.rows.length !== 0) {
         var successResponse = createApiResponse({
           success: true,
